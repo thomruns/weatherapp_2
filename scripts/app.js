@@ -4,17 +4,19 @@ const cityForm = document.querySelector('form');
 
 const updateCity = async (city) => {
   // use the location API function in forecast.js
-  // await, because getCity() is an async function
   const cityDets = await getCity(city);
   // use the weather API function in forecast.js
   const weather = await getWeather(cityDets.Key);
 
-  return { cityDets, weather }
+  return {
+    cityDets: cityDets,
+    weather: weather
+  }
 }
 
 // event listener on UI form input field
 cityForm.addEventListener('submit', e => {
-  // prevent default action of page reload on submit
+  // prevent default action
   e.preventDefault();
   // get form user input value, trim any possible whitespace
   const city = cityForm.city.value.trim();
