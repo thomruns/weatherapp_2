@@ -3,7 +3,7 @@
 // AccuWeather API Key here:
 const key = 'API_KEY_HERE';
 
-// get weather information
+// get weather information, returns a promise
 // id is the location key passed by getCity()
 const getWeather = async (id) => {
 
@@ -22,7 +22,7 @@ const getWeather = async (id) => {
 }
 
 
-// get city information
+// get city information, returns a promise
 const getCity = async (city) => {
   
   // base URL of API location endpoint
@@ -40,8 +40,3 @@ const getCity = async (city) => {
   return data[0];
 }
 
-getCity('Oceanside').then(data => {
-    return getWeather(data.Key);
- }).then(data => {
-   console.log(data)
- }).catch(err => console.log(err));
