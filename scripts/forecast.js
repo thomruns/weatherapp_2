@@ -3,6 +3,26 @@
 // AccuWeather API Key here:
 const key = 'API_KEY_HERE';
 
+// get weather information
+// id is the location key passed by getCity()
+const getWeather = async (id) => {
+
+  // base URL of API conditions endpoint
+  const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
+
+  // location key
+  const query = `${id}?apikey=${key}`;
+
+  // use fetch w constructed query string
+  const response = await fetch(base + query); // returns a promise
+  const data = await response.json();
+
+  // return the object instead of the array
+  return data[0];
+}
+
+
+// get city information
 const getCity = async (city) => {
   
   // base URL of API location endpoint
@@ -16,10 +36,12 @@ const getCity = async (city) => {
   // process response
   const data = await response.json();
 
-  // 
+  // this takes the first dataset from the returned array as the likeliest match
   return data[0];
 }
 
-getCity('Oceanside')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
+getCity('Oceanside').then(data => {
+    return getWeather(data.Key);
+ }).then(data => {
+   console.log(data)
+ }).catch(err => console.log(err));
