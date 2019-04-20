@@ -67,4 +67,14 @@ cityForm.addEventListener('submit', e => {
   updateCity(city)
     .then(data => updateUI(data))
     .catch(err => console.log(err));
+
+  // store the city in local storage
+  localStorage.setItem('city', city);
 });
+
+// retrieve most recent search from local storage if there is one
+if(localStorage.getItem('city')) {
+  updateCity(localStorage.getItem('city'))  // returns a promise
+  .then(data => updateUI(data))
+  .catch(err => console.log(err));
+}
