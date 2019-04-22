@@ -5,19 +5,8 @@ const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const time = document.querySelector('img.time');
 const icon = document.querySelector('.icon img');
+const forecast = new Forecast();
 
-
-const updateCity = async (city) => {
-  // use the location API function in forecast.js
-  const cityDets = await getCity(city);
-  // use the weather API function in forecast.js
-  const weather = await getWeather(cityDets.Key);
-
-  return {
-    cityDets: cityDets,
-    weather: weather
-  }
-}
 
 // Update the UI
 const updateUI = (data) => {
@@ -64,7 +53,7 @@ cityForm.addEventListener('submit', e => {
   cityForm.reset();
   // update UI w new city, async calls to API
   // returns a promise
-  updateCity(city)
+  forecast.updateCity(city)
     .then(data => updateUI(data))
     .catch(err => console.log(err));
 
@@ -74,7 +63,8 @@ cityForm.addEventListener('submit', e => {
 
 // retrieve most recent search from local storage if there is one
 if(localStorage.getItem('city')) {
-  updateCity(localStorage.getItem('city'))  // returns a promise
+  forecast.updateCity(localStorage.getItem('city'))  // returns a promise
   .then(data => updateUI(data))
   .catch(err => console.log(err));
 }
+
